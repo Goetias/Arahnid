@@ -8,17 +8,11 @@ public class InventoryInfo : MonoBehaviour
     [SerializeField] private ItemsBlock HandBlock;
     [SerializeField] private ItemsBlock SimpleBlock;
 
-    private void Awake()
+    
+    public void RemoveItem(ItemsBlock block, int number)
     {
-        KeyBlock = new();
-        HandBlock = new();
-        SimpleBlock = new();
-    }
-
-    public void RemoveItem(int number)
-    {
-        KeyBlock.Remove(number);
-        Debug.Log("Remove number: " + number);
+        block.Remove(number);
+        Debug.Log("Remove " + block + " number: " + number);
     }
 
     public void AddTypeItem(Item item)

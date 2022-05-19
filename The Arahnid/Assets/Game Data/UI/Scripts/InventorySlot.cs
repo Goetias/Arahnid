@@ -4,28 +4,22 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class InventorySlot : MonoBehaviour
 {
-    private Image _image;
     private Item _item;
 
-    private void Start()
-    {
-        _image = GetComponent<Image>();
-    }
-
-    public bool IsEmpty() => _image.sprite;
+    public bool IsEmpty() => _item == null;
 
     public void FillUp(Item item)
     {
-        _image.sprite = item.Image;
-        _image.color = Color.white;
+        GetComponent<Image>().sprite = item.Image;
+        GetComponent<Image>().color = Color.white;
 
         _item = item;
     }
 
     public Item Clear()
     {
-        _image.sprite = null;
-        _image.color = Color.clear;
+        GetComponent<Image>().sprite = null;
+        GetComponent<Image>().color = Color.clear;
 
         return _item;
     }

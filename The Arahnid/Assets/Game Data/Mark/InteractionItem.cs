@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class InteractionItem : MonoBehaviour
+public abstract class InteractionItem : MonoBehaviour, IInteraction
 {
     [SerializeField] private string NameInteractionKey;
 

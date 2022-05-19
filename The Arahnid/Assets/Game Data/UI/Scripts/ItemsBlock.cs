@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemsBlock : MonoBehaviour
 {
-    [SerializeField] private List<InventorySlot> Slots;
+    [SerializeField] private InventorySlot[] Slots;
 
     public void Add(Item item)
     {

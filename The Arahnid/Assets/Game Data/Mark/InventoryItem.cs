@@ -8,24 +8,12 @@ public class InventoryItem : InteractionItem, IRecordInventory
 
     public override void ActiveInteract()
     {
-        Debug.Log(DisplayName());
-
         Delete();
     }
 
     public override void HoverInteract()
     {
         
-    }
-
-    public string DisplayName()
-    {
-        return Item.Name;
-    }
-
-    public Sprite DisplayImage()
-    {
-        return Item.Image;
     }
 
     public void Delete()
