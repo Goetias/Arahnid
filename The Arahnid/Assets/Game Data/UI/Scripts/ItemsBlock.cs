@@ -1,20 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ItemsBlock : MonoBehaviour
 {
-    [SerializeField] private List<Image> Images;
+    [SerializeField] private List<InventorySlot> Slots;
 
     public void Add(Item item)
     {
-        foreach (Image image in Images)
+        foreach (InventorySlot slot in Slots)
         {
-            if (image.sprite == null)
+            if (slot.IsEmpty() == true)
             {
                 Debug.Log("Add");
-                image.sprite = item.Image;
+                slot.FillUp(item);
                 break;
             }
         }
@@ -22,6 +21,6 @@ public class ItemsBlock : MonoBehaviour
 
     public void Remove(int number)
     {
-        Images[number].sprite = null;
+        Slots[number].Clear();
     }
 }
