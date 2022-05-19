@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class InventorySlot : MonoBehaviour
 {
     private Image _image;
+    private Item _item;
 
     private void Start()
     {
@@ -17,11 +18,15 @@ public class InventorySlot : MonoBehaviour
     {
         _image.sprite = item.Image;
         _image.color = Color.white;
+
+        _item = item;
     }
 
-    public void Clear()
+    public Item Clear()
     {
         _image.sprite = null;
         _image.color = Color.clear;
+
+        return _item;
     }
 }

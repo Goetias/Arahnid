@@ -4,32 +4,30 @@ using UnityEngine;
 
 public class InventoryInfo : MonoBehaviour
 {
-    [SerializeField] private List<ItemsBlock> Blocks;
-
-    private List<Item> _keyItems;
-    private List<Item> _handItems;
-    private List<Item> _simpleItems;
+    [SerializeField] private ItemsBlock KeyBlock;
+    [SerializeField] private ItemsBlock HandBlock;
+    [SerializeField] private ItemsBlock SimpleBlock;
 
     private void Awake()
     {
-        _keyItems = new();
-        _handItems = new();
-        _simpleItems = new();
+        KeyBlock = new();
+        HandBlock = new();
+        SimpleBlock = new();
     }
 
     public void RemoveItem(int number)
     {
-        _keyItems.RemoveAt(number);
-        Debug.Log(_keyItems.Count);
+        KeyBlock.Remove(number);
+        Debug.Log("Remove number: " + number);
     }
 
     public void AddTypeItem(Item item)
     {
         switch ((int)item.type)
         {
-            case 0: _keyItems.Add(item); Blocks[0].Add(item); break;
-            case 1: _simpleItems.Add(item); Blocks[1].Add(item); break;
-            case 2: _handItems.Add(item); Blocks[2].Add(item); break;
+            case 0: KeyBlock.Add(item); break;
+            case 1: SimpleBlock.Add(item); break;
+            case 2: HandBlock.Add(item); break;
             default: throw new System.ArgumentOutOfRangeException(nameof(AddTypeItem));
         }
     }
