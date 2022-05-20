@@ -53,8 +53,8 @@ public class DisplayUI : MonoBehaviour, ITimeService
 
     public void Subscribe()
     {
-        TimeSubscription.Instance.OnPause += Stop;
-        TimeSubscription.Instance.OnRun += Run;
+        GameState.Instance.OnPause += Stop;
+        GameState.Instance.OnRun += Run;
     }
 
     private void OnEnable()

@@ -1,22 +1,35 @@
+using System;
 using UnityEngine;
 
 public class PlayerStateInfo : MonoBehaviour, ITimeHandle
 {
     public bool IsTimeRunning { get; protected set; }
+    Game.Subscriptions play = null;
+    Game.Subscriptions pause = null;
+
+    event Action test;
 
     private void Awake()
     {
         IsTimeRunning = true;
+
+        Game game = new Game(play, pause);
     }
 
     public void RunTime()
     {
-        TimeSubscription.Instance.Run();
+        GameState.Instance.Run();
+        IsTimeRunning = true;
+
+        play?.Invoke();
     }
 
     public void StopTime()
     {
-        TimeSubscription.Instance.Stop();
+        GameState.Instance.Stop();
+        IsTimeRunning = false;
+
+        pause?.Invoke();
     }
 
     public void SwapTime()
@@ -25,8 +38,7 @@ public class PlayerStateInfo : MonoBehaviour, ITimeHandle
 
         if (IsTimeRunning == true)
             RunTime();
-        else StopTime();
+        else
+            StopTime();
     }
-
-
 }
