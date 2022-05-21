@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,11 +6,11 @@ public abstract class InputEvent : MonoBehaviour
     public bool IsPressed { get; protected set; }
 
     [SerializeField] private InputActionProperty Action;
-    [SerializeField] protected bool IsEnabled = true;
+    protected bool _isEnabled = true;
 
     protected virtual void InputAct(InputAction.CallbackContext callback)
     {
-        if (IsEnabled == true)
+        if (_isEnabled == true)
             IsPressed = callback.ReadValueAsButton();
         else Debug.Log("Action is disabled");
     }

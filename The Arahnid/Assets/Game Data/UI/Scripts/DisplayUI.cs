@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,18 +10,13 @@ public class DisplayUI : MonoBehaviour, ITimeService
     private bool _isPressed = false;
     private bool _isEnable = true;
 
-    private void Start()
-    {
-        Subscribe();
-    }
-
     public void Display()
     {
         if (_isEnable == true)
         {
             Press();
         }
-        else Debug.Log("Time stop!");
+        else Debug.Log("Time is stopped!");
     }
 
     private void Press()
@@ -40,21 +33,14 @@ public class DisplayUI : MonoBehaviour, ITimeService
         PlayerInfo.SwapTime();
     }
 
-    public void Stop()
+    private void Start()
     {
-        if (_isPressed == false)
-            _isEnable = false;
+        Subscribe();
     }
 
-    public void Run()
+    private void OnDestroy()
     {
-        _isEnable = true;
-    }
-
-    public void Subscribe()
-    {
-        GameState.Instance.OnPause += Stop;
-        GameState.Instance.OnRun += Run;
+        Unsubscribe();
     }
 
     private void OnEnable()
@@ -65,5 +51,29 @@ public class DisplayUI : MonoBehaviour, ITimeService
     private void OnDisable()
     {
         ActionInventory.action.started -= T => Display();
+        Unsubscribe();
+    }
+
+    public void Pause()
+    {
+        if (_isPressed == false)
+            _isEnable = false;
+    }
+
+    public void Play()
+    {
+        _isEnable = true;
+    }
+
+    public void Subscribe()
+    {
+        GameState.Instance.OnPause += Pause;
+        GameState.Instance.OnRun += Play;
+    }
+
+    public void Unsubscribe()
+    {
+        GameState.Instance.OnPause -= Pause;
+        GameState.Instance.OnRun -= Play;
     }
 }

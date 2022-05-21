@@ -14,7 +14,7 @@ public abstract class MovementExpension : InputAnimation
 
     protected override void InputAct(InputAction.CallbackContext callback)
     {
-        if (IsEnabled == true)
+        if (_isEnabled == true)
         {
             IsPressed = callback.ReadValueAsButton();
         }

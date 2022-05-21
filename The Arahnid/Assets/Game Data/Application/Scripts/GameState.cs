@@ -1,46 +1,16 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class GameState : MonoBehaviour
+public class GameState
 {
     public static GameState Instance { get; private set; }
 
-    public delegate void Subscriptions();
-    public event Subscriptions OnPause;
-    public event Subscriptions OnRun;
-
-
-    private void Awake()
+    public event Action OnPause;
+    public event Action OnRun;
+   
+    public GameState(out Action playEvent, out Action pauseEvent)
     {
-        Instance = this;
-    }
-
-    public void Run()
-    {
-        OnRun.Invoke();
-    }
-
-    public void Stop()
-    {
-        OnPause.Invoke();
-    }
-}
-
-
-public class Game
-{
-    public static Game Instance { get; private set; }
-
-    public delegate void Subscriptions();
-    public event Subscriptions OnPause;
-    public event Subscriptions OnRun;
-
-    public Game(Subscriptions playEvent, Subscriptions pauseEvent)
-    {
-        playEvent += Play;
-        pauseEvent += Pause;
+        playEvent = Play;
+        pauseEvent = Pause;
 
         Instance = this;
     }
@@ -52,6 +22,6 @@ public class Game
 
     private void Pause()
     {
-        OnRun?.Invoke();
+        OnPause?.Invoke();
     }
 }

@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInteraction : InputEvent
+public class PlayerInteraction : InputEvent, ITimeService
 {
     [SerializeField] private Camera MainCamera;
     [SerializeField] private InventoryInfo Inventory;
@@ -13,15 +11,11 @@ public class PlayerInteraction : InputEvent
 
     private bool _isHover = false;
 
-
-    private void Awake()
-    {
-        CreatingRay = new CreatingCameraRay(MainCamera);
-    }
-
     private void Update()
     {
-        TryIntercation();
+        if (_isEnabled == true)
+            TryIntercation();
+        else Debug.Log("Time is stopped!");
     }
 
     private void TryIntercation()
@@ -70,5 +64,38 @@ public class PlayerInteraction : InputEvent
         }
 
         item.ActiveInteract();
+    }
+
+    private void Start()
+    {
+        CreatingRay = new CreatingCameraRay(MainCamera);
+        Subscribe();
+    }
+
+    private void OnDestroy()
+    {
+        Unsubscribe();
+    }
+
+    public void Pause()
+    {
+        _isEnabled = false;
+    }
+
+    public void Play()
+    {
+        _isEnabled = true;
+    }
+
+    public void Subscribe()
+    {
+        GameState.Instance.OnPause += Pause;
+        GameState.Instance.OnRun += Play;
+    }
+
+    public void Unsubscribe()
+    {
+        GameState.Instance.OnPause -= Pause;
+        GameState.Instance.OnRun -= Play;
     }
 }

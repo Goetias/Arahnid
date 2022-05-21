@@ -4,31 +4,26 @@ using UnityEngine;
 public class PlayerStateInfo : MonoBehaviour, ITimeHandle
 {
     public bool IsTimeRunning { get; protected set; }
-    Game.Subscriptions play = null;
-    Game.Subscriptions pause = null;
+    private event Action play;
+    private event Action pause;
 
-    event Action test;
 
     private void Awake()
     {
         IsTimeRunning = true;
 
-        Game game = new Game(play, pause);
+        new GameState(out play, out pause);
     }
 
     public void RunTime()
     {
-        GameState.Instance.Run();
         IsTimeRunning = true;
-
         play?.Invoke();
     }
 
     public void StopTime()
     {
-        GameState.Instance.Stop();
         IsTimeRunning = false;
-
         pause?.Invoke();
     }
 
