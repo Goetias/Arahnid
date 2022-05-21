@@ -16,7 +16,7 @@ public class PlayerMovement : InputAnimation, ITimeService
         if (_isEnabled == true)
         {
 
-            _direction = PlayerGravity.Instance.HandleGravity(_direction);
+            _direction = HandleGravity(_direction);
 
             if (IsPressed == true)
             {
@@ -35,9 +35,25 @@ public class PlayerMovement : InputAnimation, ITimeService
         else Debug.Log("Time is stopped!");
     }
 
-    public void Move(float speed)
+    private void Move(float speed)
     {
         _characterController.Move(transform.TransformDirection(_direction * speed) * Time.deltaTime);
+    }
+
+    private Vector3 HandleGravity(Vector3 vector)
+    {
+        if (_characterController.isGrounded)
+        {
+            float groundedGravity = -0.05f;
+            vector.y = groundedGravity;
+            return vector;
+        }
+        else
+        {
+            float groundedGravity = -9.8f;
+            vector.y += groundedGravity * Time.deltaTime;
+            return vector;
+        }
     }
 
     protected override void InputAct(InputAction.CallbackContext callback)
