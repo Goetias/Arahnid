@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CursorState : MonoBehaviour
+public class CursorState
 {
     public static CursorState Instance { get; private set; }
 
